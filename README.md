@@ -1,6 +1,6 @@
 # ClaimPilot-RL
 
-**An LLM agent for insurance-claims customer service, built around skill-routed tool use, a verifiable sandbox, and self-evolving reinforcement learning.**
+**An LLM agent for claims customer service, built around skill-routed tool use, a verifiable sandbox, and self-evolving reinforcement learning.**
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![veRL](https://img.shields.io/badge/Framework-veRL-orange)
