@@ -1,0 +1,30 @@
+{
+  "case_id": "claim_partial_payment_0417",
+  "family": "partial_payment",
+  "difficulty": "medium",
+  "initial_user_message": "Why was only part of it paid? My bill was more than this. What exactly was deducted?",
+  "subissues": ["payment_reason", "deductible_or_ratio", "next_step_if_disagree"],
+  "customer_profile": {"customer_id": "C041", "name": "Mr. Gao", "channel": "app", "emotion": "confused", "age": 31, "gender": "male"},
+  "policy_summary": {"policy_id": "P410", "product": "Hospital Cash Benefit Insurance D1", "insured_name": "Mr. Gao", "status": "active"},
+  "claim_case": {"claim_id": "CL4101", "status": "paid_partial", "status_reason": "Partially paid after the deductible and removal of over-limit items", "manual_review_required": false, "risk_flags": []},
+  "claim_timeline": [
+    {"date": "2026-08-01", "event": "Claim submitted"},
+    {"date": "2026-08-04", "event": "Review approved"},
+    {"date": "2026-08-05", "event": "Partial payout completed"}
+  ],
+  "required_documents": [],
+  "uploaded_documents": ["Discharge summary", "Hospitalization invoice", "Itemized bill"],
+  "liability_rules": {"coverage_decision": "partial_covered_with_ratio", "terms": ["Deductible of 300 yuan per hospital stay", "Expenses above the benefit limit are not paid"]},
+  "payment_breakdown": {"status": "paid_partial", "eligible_amount": 4200, "deductible": 300, "reimbursable": 3900, "reason": "300 yuan deductible applied and the over-limit portion removed"},
+  "sla_rules": {"review_after_docs": "not applicable", "payment_after_approval": "Payout within 1-3 business days after approval", "exact_promise_allowed": false},
+  "escalation_matrix": {"partial_payment": "customer_service", "risk_or_fraud": "human_adjuster"},
+  "ideal_disposition": "explain_partial_payment",
+  "required_slots": ["claim_status", "payout_amount", "coverage_decision"],
+  "required_actions": ["get_claim_case", "get_payment_breakdown", "get_policy_terms"],
+  "must_escalate": false,
+  "safe_to_self_serve": true,
+  "hard_forbidden": ["payout_without_basis", "fabricated_coverage"],
+  "bucket": "train",
+  "tags": ["partial_payment", "ratio"],
+  "user_variants": []
+}

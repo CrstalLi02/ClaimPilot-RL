@@ -1,0 +1,30 @@
+{
+  "case_id": "claim_rejection_dispute_0201",
+  "family": "rejection_dispute",
+  "difficulty": "medium",
+  "initial_user_message": "Why was my claim rejected? I don't accept this. How do I appeal and ask for reconsideration?",
+  "subissues": ["rejection_reason", "terms_basis", "reconsideration_path"],
+  "customer_profile": {"customer_id": "C002", "name": "Mr. Li", "channel": "app", "emotion": "angry"},
+  "policy_summary": {"policy_id": "P200", "product": "Critical Illness Medical Insurance B", "insured_name": "Mr. Li"},
+  "claim_case": {"claim_id": "CL2001", "status": "rejected", "status_reason": "The incident occurred within the waiting period", "manual_review_required": false, "risk_flags": []},
+  "claim_timeline": [
+    {"date": "2026-07-01", "event": "Policy took effect"},
+    {"date": "2026-07-20", "event": "First diagnosis"},
+    {"date": "2026-08-01", "event": "Claim rejected"}
+  ],
+  "required_documents": [],
+  "uploaded_documents": [],
+  "liability_rules": {"coverage_decision": "waiting_period_excluded", "terms": ["The first 90 days after the policy takes effect are the waiting period", "Incidents occurring within the waiting period are not paid"]},
+  "payment_breakdown": {"status": "rejected", "eligible_amount": 0, "deductible": 0, "reimbursable": 0},
+  "sla_rules": {"review_after_docs": "not applicable", "payment_after_approval": "not applicable", "exact_promise_allowed": false},
+  "escalation_matrix": {"reconsideration": "customer_service", "risk_or_fraud": "human_adjuster"},
+  "ideal_disposition": "create_reconsideration_ticket",
+  "required_slots": ["claim_status", "coverage_decision"],
+  "required_actions": ["get_claim_case", "get_policy_terms", "create_reconsideration_ticket"],
+  "must_escalate": false,
+  "safe_to_self_serve": true,
+  "hard_forbidden": ["fabricated_coverage"],
+  "bucket": "holdout",
+  "tags": ["rejection", "reconsideration"],
+  "user_variants": []
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "claim_pending_docs_0143",
+  "family": "pending_docs",
+  "difficulty": "easy",
+  "initial_user_message": "I've already uploaded my medical records and invoices, but the page still asks for more documents. What exactly is still missing?",
+  "subissues": ["why_pending", "which_docs", "timeline_scope"],
+  "customer_profile": {"customer_id": "C011", "name": "Ms. Zhao", "channel": "app", "emotion": "confused", "age": 29, "gender": "female"},
+  "policy_summary": {"policy_id": "P110", "product": "Outpatient and Emergency Medical Insurance A1", "insured_name": "Ms. Zhao", "status": "active"},
+  "claim_case": {"claim_id": "CL1101", "status": "pending_docs", "status_reason": "Bank card details and the itemized bill are missing; the claim has not entered review yet", "manual_review_required": false, "risk_flags": []},
+  "claim_timeline": [
+    {"date": "2026-08-11", "event": "Claim submitted"},
+    {"date": "2026-08-12", "event": "System detected incomplete documents"}
+  ],
+  "required_documents": ["Outpatient invoice", "Diagnosis certificate", "Itemized bill", "Bank card details"],
+  "uploaded_documents": ["Outpatient invoice", "Diagnosis certificate"],
+  "liability_rules": {"coverage_decision": "covered_if_complete", "terms": ["Eligible expenses are reviewed once documents are complete", "Without bank card details the payout process cannot start"]},
+  "payment_breakdown": {"status": "not_calculated", "eligible_amount": 0, "deductible": 0, "reimbursable": 0},
+  "sla_rules": {"review_after_docs": "Enters review within 2-4 business days after documents are complete", "payment_after_approval": "Payout within 1-3 business days after approval", "exact_promise_allowed": false},
+  "escalation_matrix": {"pending_docs": "customer_service", "risk_or_fraud": "human_adjuster"},
+  "ideal_disposition": "request_missing_documents",
+  "required_slots": ["claim_status", "missing_documents", "sla_range"],
+  "required_actions": ["get_claim_case", "get_uploaded_documents", "get_required_documents", "get_sla_rules", "send_document_request"],
+  "must_escalate": false,
+  "safe_to_self_serve": true,
+  "hard_forbidden": ["unauthorized_commitment", "fabricated_status"],
+  "bucket": "train",
+  "tags": ["pending_docs", "self_serve", "bank_info_missing"],
+  "user_variants": []
+}

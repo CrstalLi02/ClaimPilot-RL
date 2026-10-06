@@ -1,0 +1,30 @@
+{
+  "case_id": "claim_partial_payment_0416",
+  "family": "partial_payment",
+  "difficulty": "medium",
+  "initial_user_message": "Why did I spend 4500 on my hospital stay but you only paid 3000? How exactly was it calculated? What can I do if I disagree?",
+  "subissues": ["payment_reason", "deductible_or_ratio", "next_step_if_disagree"],
+  "customer_profile": {"customer_id": "C004", "name": "Ms. Chen", "channel": "app", "emotion": "confused"},
+  "policy_summary": {"policy_id": "P400", "product": "Hospital Cash Benefit Insurance D", "insured_name": "Ms. Chen"},
+  "claim_case": {"claim_id": "CL4001", "status": "paid_partial", "status_reason": "Partially paid within the benefit limit after the deductible", "manual_review_required": false, "risk_flags": []},
+  "claim_timeline": [
+    {"date": "2026-08-01", "event": "Claim submitted"},
+    {"date": "2026-08-05", "event": "Review approved"},
+    {"date": "2026-08-06", "event": "Partial payout completed"}
+  ],
+  "required_documents": [],
+  "uploaded_documents": ["Discharge summary", "Original invoice", "ID card (front and back)"],
+  "liability_rules": {"coverage_decision": "partial_covered_with_deductible", "terms": ["Deductible of 500 yuan per hospital stay", "Amounts above the benefit limit are not paid"]},
+  "payment_breakdown": {"status": "paid_partial", "eligible_amount": 3500, "deductible": 500, "reimbursable": 3000, "reason": "500 yuan deductible applied, and the over-limit portion is not paid"},
+  "sla_rules": {"review_after_docs": "not applicable", "payment_after_approval": "Payout within 1-3 business days after approval", "exact_promise_allowed": false},
+  "escalation_matrix": {"partial_payment": "customer_service", "risk_or_fraud": "human_adjuster"},
+  "ideal_disposition": "explain_partial_payment",
+  "required_slots": ["claim_status", "payout_amount", "coverage_decision"],
+  "required_actions": ["get_claim_case", "get_payment_breakdown", "get_policy_terms"],
+  "must_escalate": false,
+  "safe_to_self_serve": true,
+  "hard_forbidden": ["payout_without_basis", "fabricated_coverage"],
+  "bucket": "replay_pool",
+  "tags": ["partial_payment", "explanation"],
+  "user_variants": []
+}

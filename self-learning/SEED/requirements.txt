@@ -1,0 +1,47 @@
+# requirements.txt records the full set of dependencies for development
+# Versions match the remote training environment
+
+# Core dependencies
+torch==2.8.0
+transformers==4.57.1
+vllm==0.11.0
+
+# Environments
+gymnasium==0.29.1
+stable-baselines3==2.6.0
+alfworld==0.4.2
+textworld==1.6.2
+
+# Training frameworks
+ray[default]==2.48.0
+datasets==3.3.2
+accelerate==1.10.0
+
+# Other tools
+wandb==0.19.11
+hydra-core==1.3.2
+omegaconf==2.3.0
+openai
+huggingface-hub
+
+# Install the project itself (installed by pip install -e .)
+# -e .
+
+# Development dependencies below (optional)
+codetiming
+dill
+flash-attn
+liger-kernel
+numpy==2.2.6
+pandas
+peft
+pyarrow>=19.0.0
+pybind11
+pylatexenc
+pre-commit
+tensordict==0.10.0
+torchdata
+packaging>=20.0
+uvicorn
+fastapi
+qwen-vl-utils[decord]

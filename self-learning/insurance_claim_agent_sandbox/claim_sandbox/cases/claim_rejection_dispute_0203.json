@@ -1,0 +1,30 @@
+{
+  "case_id": "claim_rejection_dispute_0203",
+  "family": "rejection_dispute",
+  "difficulty": "hard",
+  "initial_user_message": "My claim was turned down as a pre-existing condition. I don't accept that. Give me a way to get it reviewed again.",
+  "subissues": ["rejection_reason", "terms_basis", "reconsideration_path"],
+  "customer_profile": {"customer_id": "C022", "name": "Ms. Zhou", "channel": "phone", "emotion": "furious", "age": 47, "gender": "female"},
+  "policy_summary": {"policy_id": "P211", "product": "Critical Illness Medical Insurance B2", "insured_name": "Ms. Zhou", "status": "active"},
+  "claim_case": {"claim_id": "CL2102", "status": "rejected", "status_reason": "Medical records indicate a pre-existing condition, which is excluded", "manual_review_required": false, "risk_flags": []},
+  "claim_timeline": [
+    {"date": "2026-06-05", "event": "Claim submitted"},
+    {"date": "2026-06-10", "event": "Adjuster found signs of a pre-existing condition"},
+    {"date": "2026-06-12", "event": "Claim rejected"}
+  ],
+  "required_documents": [],
+  "uploaded_documents": ["Medical record", "Diagnosis certificate"],
+  "liability_rules": {"coverage_decision": "pre_existing_excluded", "terms": ["Conditions that existed before the policy was purchased are not paid", "The adjuster may apply the exclusion based on prior medical history"]},
+  "payment_breakdown": {"status": "rejected", "eligible_amount": 0, "deductible": 0, "reimbursable": 0},
+  "sla_rules": {"review_after_docs": "not applicable", "payment_after_approval": "not applicable", "exact_promise_allowed": false},
+  "escalation_matrix": {"reconsideration": "customer_service", "risk_or_fraud": "human_adjuster"},
+  "ideal_disposition": "create_reconsideration_ticket",
+  "required_slots": ["claim_status", "coverage_decision"],
+  "required_actions": ["get_claim_case", "get_policy_terms", "create_reconsideration_ticket"],
+  "must_escalate": false,
+  "safe_to_self_serve": true,
+  "hard_forbidden": ["fabricated_coverage"],
+  "bucket": "holdout",
+  "tags": ["rejection", "pre_existing"],
+  "user_variants": []
+}

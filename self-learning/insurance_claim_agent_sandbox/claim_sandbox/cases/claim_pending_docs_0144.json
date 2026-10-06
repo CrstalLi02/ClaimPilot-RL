@@ -1,0 +1,29 @@
+{
+  "case_id": "claim_pending_docs_0144",
+  "family": "pending_docs",
+  "difficulty": "medium",
+  "initial_user_message": "You keep saying my documents are incomplete, but I can't tell what's missing. Can you explain it all at once?",
+  "subissues": ["why_pending", "which_docs", "timeline_scope"],
+  "customer_profile": {"customer_id": "C012", "name": "Mr. Sun", "channel": "phone", "emotion": "frustrated", "age": 41, "gender": "male"},
+  "policy_summary": {"policy_id": "P111", "product": "Hospitalization Medical Insurance A2", "insured_name": "Mr. Sun", "status": "active"},
+  "claim_case": {"claim_id": "CL1102", "status": "pending_docs", "status_reason": "Medical record pages are missing and the invoice header is incomplete", "manual_review_required": false, "risk_flags": []},
+  "claim_timeline": [
+    {"date": "2026-08-15", "event": "Claim submitted"},
+    {"date": "2026-08-16", "event": "System detected missing medical record pages"}
+  ],
+  "required_documents": ["Complete medical record", "Original hospitalization invoice", "ID card (front and back)"],
+  "uploaded_documents": ["Original hospitalization invoice", "ID card (front and back)"],
+  "liability_rules": {"coverage_decision": "covered_if_complete", "terms": ["Hospitalization claims require a complete medical record and invoices", "Incomplete documents do not enter review"]},
+  "payment_breakdown": {"status": "not_calculated", "eligible_amount": 0, "deductible": 0, "reimbursable": 0},
+  "sla_rules": {"review_after_docs": "Enters review within 3-5 business days after documents are complete", "payment_after_approval": "Payout within 1-3 business days after approval", "exact_promise_allowed": false},
+  "escalation_matrix": {"pending_docs": "customer_service", "risk_or_fraud": "human_adjuster"},
+  "ideal_disposition": "request_missing_documents",
+  "required_slots": ["claim_status", "missing_documents", "sla_range"],
+  "required_actions": ["get_claim_case", "get_uploaded_documents", "get_required_documents", "get_sla_rules", "send_document_request"],
+  "must_escalate": false,
+  "safe_to_self_serve": true,
+  "hard_forbidden": ["unauthorized_commitment", "fabricated_status"],
+  "bucket": "train",
+  "tags": ["pending_docs", "self_serve", "medical_record_missing"],
+  "user_variants": []
+}

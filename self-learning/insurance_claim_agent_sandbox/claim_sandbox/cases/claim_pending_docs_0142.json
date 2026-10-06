@@ -1,0 +1,29 @@
+{
+  "case_id": "claim_pending_docs_0142",
+  "family": "pending_docs",
+  "difficulty": "medium",
+  "initial_user_message": "I submitted a hospitalization claim last week and it keeps showing pending documents. What exactly is missing? Once I send it, how long until I get paid?",
+  "subissues": ["why_pending", "which_docs", "timeline_scope"],
+  "customer_profile": {"customer_id": "C001", "name": "Ms. Zhang", "channel": "app", "emotion": "anxious"},
+  "policy_summary": {"policy_id": "P100", "product": "Hospitalization Medical Insurance A", "insured_name": "Ms. Zhang"},
+  "claim_case": {"claim_id": "CL1001", "status": "pending_docs", "status_reason": "Key documents are missing; the claim has not entered review yet", "manual_review_required": false, "risk_flags": []},
+  "claim_timeline": [
+    {"date": "2026-08-09", "event": "Claim submitted"},
+    {"date": "2026-08-10", "event": "System detected missing documents"}
+  ],
+  "required_documents": ["Discharge summary", "Original hospitalization invoice", "ID card (front and back)"],
+  "uploaded_documents": ["ID card (front and back)"],
+  "liability_rules": {"coverage_decision": "covered_if_complete", "terms": ["Hospitalization is within the scope of cover", "The claim enters review once complete documents are provided"]},
+  "payment_breakdown": {"status": "not_calculated", "eligible_amount": 0, "deductible": 0, "reimbursable": 0},
+  "sla_rules": {"review_after_docs": "Enters review within 3-5 business days after documents are complete", "payment_after_approval": "Payout within 1-3 business days after approval", "exact_promise_allowed": false},
+  "escalation_matrix": {"pending_docs": "customer_service", "risk_or_fraud": "human_adjuster"},
+  "ideal_disposition": "request_missing_documents",
+  "required_slots": ["claim_status", "missing_documents", "sla_range"],
+  "required_actions": ["get_claim_case", "get_uploaded_documents", "get_required_documents", "get_sla_rules", "send_document_request"],
+  "must_escalate": false,
+  "safe_to_self_serve": true,
+  "hard_forbidden": ["unauthorized_commitment", "fabricated_status"],
+  "bucket": "train",
+  "tags": ["pending_docs", "self_serve"],
+  "user_variants": []
+}

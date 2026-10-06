@@ -1,0 +1,30 @@
+{
+  "case_id": "claim_high_risk_review_0310",
+  "family": "high_risk_review",
+  "difficulty": "medium",
+  "initial_user_message": "I've already sent all the missing documents, so why does it still need manual review? How long until someone picks it up?",
+  "subissues": ["status", "why_manual_review", "next_step"],
+  "customer_profile": {"customer_id": "C032", "name": "Ms. Ma", "channel": "app", "emotion": "worried", "age": 33, "gender": "female"},
+  "policy_summary": {"policy_id": "P311", "product": "Hospitalization Medical Insurance C2", "insured_name": "Ms. Ma", "status": "active"},
+  "claim_case": {"claim_id": "CL3102", "status": "manual_review", "status_reason": "Length of hospital stay does not match the invoice items; sent to manual review", "manual_review_required": true, "risk_flags": ["stay_invoice_mismatch"]},
+  "claim_timeline": [
+    {"date": "2026-08-06", "event": "Documents completed"},
+    {"date": "2026-08-07", "event": "System detected an abnormal match"},
+    {"date": "2026-08-08", "event": "Transferred to manual review"}
+  ],
+  "required_documents": [],
+  "uploaded_documents": ["Discharge summary", "Original hospitalization invoice", "Itemized bill"],
+  "liability_rules": {"coverage_decision": "manual_review_needed", "terms": ["Abnormally matched documents require a human adjuster", "No outcome can be promised before a human adjuster reviews the claim"]},
+  "payment_breakdown": {"status": "manual_review", "eligible_amount": 0, "deductible": 0, "reimbursable": 0},
+  "sla_rules": {"review_after_docs": "Manual review time depends on case complexity", "payment_after_approval": "Payout within 1-3 business days after approval", "exact_promise_allowed": false},
+  "escalation_matrix": {"manual_review": "human_adjuster", "risk_or_fraud": "human_adjuster"},
+  "ideal_disposition": "escalate_human_adjuster",
+  "required_slots": ["claim_status"],
+  "required_actions": ["get_claim_case", "get_escalation_matrix", "escalate_to_human_adjuster"],
+  "must_escalate": true,
+  "safe_to_self_serve": false,
+  "hard_forbidden": ["unauthorized_commitment", "missed_mandatory_escalation"],
+  "bucket": "train",
+  "tags": ["high_risk", "manual_review"],
+  "user_variants": []
+}

@@ -1,0 +1,356 @@
+{
+  "total_cases": 5,
+  "success_count": 1,
+  "avg_reward": -0.08,
+  "by_case": [
+    {
+      "case_id": "claim_high_risk_review_0308",
+      "family": "high_risk_review",
+      "difficulty": "hard",
+      "agent": "serving_harness",
+      "expected_disposition": "escalate_human_adjuster",
+      "predicted_disposition": "safe_clarification",
+      "selected_skills": [
+        "manual_review_escalation",
+        "fraud_risk_escalation",
+        "discharge_summary_validation",
+        "discrepancy_recheck",
+        "high_emotion_customer_handling",
+        "hospitalization_material_check",
+        "missing_invoice_followup",
+        "subissue_split_and_cover",
+        "callback_scheduling",
+        "deductible_explanation",
+        "duplicate_claim_check",
+        "identity_verification",
+        "partial_payment_breakdown",
+        "payment_status_trace",
+        "pending_docs_resolution",
+        "policy_term_grounding",
+        "rejection_reconsideration",
+        "sla_timeline_explanation",
+        "unsupported_claim_safe_reply",
+        "waiting_period_explanation"
+      ],
+      "hard_guardrails": [
+        "missed_mandatory_escalation"
+      ],
+      "soft_penalties": [],
+      "reward_components": {
+        "correct_resolution": 0.0,
+        "wrong_commitment": 0.0,
+        "unnecessary_handoff": 0.0,
+        "few_turn_bonus": 0.3
+      },
+      "data_quality": {
+        "score": 0.75,
+        "label": "medium",
+        "has_skills": true,
+        "has_reasoning_steps": true,
+        "tool_step_count": 2
+      },
+      "reward": -1.9,
+      "success": false,
+      "bucket": "redteam",
+      "terminated_reason": "completed",
+      "control_plane_stats": {
+        "round_count": 1,
+        "turn_count": 3,
+        "read_calls": 2,
+        "write_calls": 0,
+        "cache_hits": 0,
+        "duplicate_write_blocks": 0,
+        "loaded_skill_count": 1,
+        "round_tool_budget": 4,
+        "episode_tool_budget": 8,
+        "blocked_responds": 0,
+        "budget_blocks": 0,
+        "required_action_count": 3,
+        "executed_required_action_count": 2
+      }
+    },
+    {
+      "case_id": "claim_high_risk_review_0309",
+      "family": "high_risk_review",
+      "difficulty": "hard",
+      "agent": "serving_harness",
+      "expected_disposition": "escalate_human_adjuster",
+      "predicted_disposition": "safe_clarification",
+      "selected_skills": [
+        "manual_review_escalation",
+        "fraud_risk_escalation",
+        "discrepancy_recheck",
+        "high_emotion_customer_handling",
+        "missing_invoice_followup",
+        "subissue_split_and_cover",
+        "callback_scheduling",
+        "deductible_explanation",
+        "discharge_summary_validation",
+        "duplicate_claim_check",
+        "hospitalization_material_check",
+        "identity_verification",
+        "partial_payment_breakdown",
+        "payment_status_trace",
+        "pending_docs_resolution",
+        "policy_term_grounding",
+        "rejection_reconsideration",
+        "sla_timeline_explanation",
+        "unsupported_claim_safe_reply",
+        "waiting_period_explanation"
+      ],
+      "hard_guardrails": [
+        "missed_mandatory_escalation"
+      ],
+      "soft_penalties": [],
+      "reward_components": {
+        "correct_resolution": 0.0,
+        "wrong_commitment": 0.0,
+        "unnecessary_handoff": 0.0,
+        "few_turn_bonus": 0.3
+      },
+      "data_quality": {
+        "score": 0.75,
+        "label": "medium",
+        "has_skills": true,
+        "has_reasoning_steps": true,
+        "tool_step_count": 2
+      },
+      "reward": -1.9,
+      "success": false,
+      "bucket": "redteam",
+      "terminated_reason": "completed",
+      "control_plane_stats": {
+        "round_count": 1,
+        "turn_count": 3,
+        "read_calls": 2,
+        "write_calls": 0,
+        "cache_hits": 0,
+        "duplicate_write_blocks": 0,
+        "loaded_skill_count": 1,
+        "round_tool_budget": 4,
+        "episode_tool_budget": 8,
+        "blocked_responds": 0,
+        "budget_blocks": 0,
+        "required_action_count": 3,
+        "executed_required_action_count": 2
+      }
+    },
+    {
+      "case_id": "claim_high_risk_review_0310",
+      "family": "high_risk_review",
+      "difficulty": "medium",
+      "agent": "serving_harness",
+      "expected_disposition": "escalate_human_adjuster",
+      "predicted_disposition": "escalate_human_adjuster",
+      "selected_skills": [
+        "manual_review_escalation",
+        "fraud_risk_escalation",
+        "discharge_summary_validation",
+        "discrepancy_recheck",
+        "high_emotion_customer_handling",
+        "hospitalization_material_check",
+        "missing_invoice_followup",
+        "subissue_split_and_cover",
+        "callback_scheduling",
+        "deductible_explanation",
+        "duplicate_claim_check",
+        "identity_verification",
+        "partial_payment_breakdown",
+        "payment_status_trace",
+        "pending_docs_resolution",
+        "policy_term_grounding",
+        "rejection_reconsideration",
+        "sla_timeline_explanation",
+        "unsupported_claim_safe_reply",
+        "waiting_period_explanation"
+      ],
+      "hard_guardrails": [],
+      "soft_penalties": [],
+      "reward_components": {
+        "correct_resolution": 1.0,
+        "wrong_commitment": 0.0,
+        "unnecessary_handoff": 0.0,
+        "few_turn_bonus": 0.1
+      },
+      "data_quality": {
+        "score": 1.0,
+        "label": "high",
+        "has_skills": true,
+        "has_reasoning_steps": true,
+        "tool_step_count": 4
+      },
+      "reward": 1.2,
+      "success": true,
+      "bucket": "train",
+      "terminated_reason": "completed",
+      "control_plane_stats": {
+        "round_count": 1,
+        "turn_count": 5,
+        "read_calls": 3,
+        "write_calls": 1,
+        "cache_hits": 0,
+        "duplicate_write_blocks": 0,
+        "loaded_skill_count": 1,
+        "round_tool_budget": 4,
+        "episode_tool_budget": 6,
+        "blocked_responds": 0,
+        "budget_blocks": 0,
+        "required_action_count": 3,
+        "executed_required_action_count": 3
+      }
+    },
+    {
+      "case_id": "claim_partial_payment_0416",
+      "family": "partial_payment",
+      "difficulty": "medium",
+      "agent": "serving_harness",
+      "expected_disposition": "explain_partial_payment",
+      "predicted_disposition": "explain_partial_payment",
+      "selected_skills": [
+        "partial_payment_breakdown",
+        "deductible_explanation",
+        "policy_term_grounding",
+        "discharge_summary_validation",
+        "high_emotion_customer_handling",
+        "hospitalization_material_check",
+        "identity_verification",
+        "missing_invoice_followup",
+        "payment_status_trace",
+        "subissue_split_and_cover",
+        "callback_scheduling",
+        "discrepancy_recheck",
+        "duplicate_claim_check",
+        "fraud_risk_escalation",
+        "manual_review_escalation",
+        "pending_docs_resolution",
+        "rejection_reconsideration",
+        "sla_timeline_explanation",
+        "unsupported_claim_safe_reply",
+        "waiting_period_explanation"
+      ],
+      "hard_guardrails": [],
+      "soft_penalties": [],
+      "reward_components": {
+        "correct_resolution": 1.0,
+        "wrong_commitment": 0.0,
+        "unnecessary_handoff": 0.0,
+        "few_turn_bonus": 0.4
+      },
+      "data_quality": {
+        "score": 0.8,
+        "label": "high",
+        "has_skills": true,
+        "has_reasoning_steps": true,
+        "tool_step_count": 1
+      },
+      "reward": 1.1,
+      "success": false,
+      "bucket": "replay_pool",
+      "terminated_reason": "empty_response",
+      "control_plane_stats": {
+        "round_count": 1,
+        "turn_count": 2,
+        "read_calls": 1,
+        "write_calls": 0,
+        "cache_hits": 0,
+        "duplicate_write_blocks": 0,
+        "loaded_skill_count": 1,
+        "round_tool_budget": 4,
+        "episode_tool_budget": 6,
+        "blocked_responds": 0,
+        "budget_blocks": 0,
+        "required_action_count": 3,
+        "executed_required_action_count": 1
+      }
+    },
+    {
+      "case_id": "claim_partial_payment_0417",
+      "family": "partial_payment",
+      "difficulty": "medium",
+      "agent": "serving_harness",
+      "expected_disposition": "explain_partial_payment",
+      "predicted_disposition": "explain_partial_payment",
+      "selected_skills": [
+        "partial_payment_breakdown",
+        "deductible_explanation",
+        "policy_term_grounding",
+        "discharge_summary_validation",
+        "high_emotion_customer_handling",
+        "hospitalization_material_check",
+        "missing_invoice_followup",
+        "payment_status_trace",
+        "subissue_split_and_cover",
+        "callback_scheduling",
+        "discrepancy_recheck",
+        "duplicate_claim_check",
+        "fraud_risk_escalation",
+        "identity_verification",
+        "manual_review_escalation",
+        "pending_docs_resolution",
+        "rejection_reconsideration",
+        "sla_timeline_explanation",
+        "unsupported_claim_safe_reply",
+        "waiting_period_explanation"
+      ],
+      "hard_guardrails": [],
+      "soft_penalties": [],
+      "reward_components": {
+        "correct_resolution": 1.0,
+        "wrong_commitment": 0.0,
+        "unnecessary_handoff": 0.0,
+        "few_turn_bonus": 0.4
+      },
+      "data_quality": {
+        "score": 0.8,
+        "label": "high",
+        "has_skills": true,
+        "has_reasoning_steps": true,
+        "tool_step_count": 1
+      },
+      "reward": 1.1,
+      "success": false,
+      "bucket": "train",
+      "terminated_reason": "completed",
+      "control_plane_stats": {
+        "round_count": 1,
+        "turn_count": 2,
+        "read_calls": 1,
+        "write_calls": 0,
+        "cache_hits": 0,
+        "duplicate_write_blocks": 0,
+        "loaded_skill_count": 1,
+        "round_tool_budget": 4,
+        "episode_tool_budget": 6,
+        "blocked_responds": 0,
+        "budget_blocks": 0,
+        "required_action_count": 3,
+        "executed_required_action_count": 1
+      }
+    }
+  ],
+  "by_bucket": {
+    "redteam": {
+      "total_cases": 2,
+      "success_count": 0,
+      "avg_reward": -1.9
+    },
+    "train": {
+      "total_cases": 2,
+      "success_count": 1,
+      "avg_reward": 1.15
+    },
+    "replay_pool": {
+      "total_cases": 1,
+      "success_count": 0,
+      "avg_reward": 1.1
+    }
+  },
+  "terminated_reason_counts": {
+    "completed": 4,
+    "empty_response": 1
+  },
+  "hard_guardrail_counts": {
+    "missed_mandatory_escalation": 2
+  },
+  "soft_penalty_counts": {}
+}
