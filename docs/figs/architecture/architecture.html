@@ -13,9 +13,9 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    width: 1600px; background: #fff; color: var(--ink);
+    width: 1600px; height: 1380px; background: #fff; color: var(--ink);
     font-family: "Chalkboard SE", "Comic Sans MS", "Arial Rounded MT Bold", sans-serif;
-    padding: 22px 30px 24px;
+    padding: 22px 30px;
   }
   .title {
     display: flex; align-items: center; justify-content: center; gap: 14px;
@@ -62,9 +62,8 @@
   .s2 .card { border-color: #8fb0e6; }
   .s3 .card { border-color: #8fd0ad; }
   .card img { max-height: 160px; max-width: 100%; }
-  .caption { font-size: 17px; font-weight: 700; margin-top: 8px; text-align: center; line-height: 1.25; }
-  .caption .sub { display: block; font-size: 14px; font-weight: 400; color: #6b6280; }
-  .caption .extra { display: block; font-size: 13px; font-weight: 400; color: #5a5470; margin-top: 3px; line-height: 1.3; }
+  .caption { font-size: 18px; font-weight: 700; margin-top: 8px; text-align: center; line-height: 1.25; }
+  .caption .sub { display: block; font-size: 15px; font-weight: 400; color: #6b6280; }
 
   .arrow { align-self: center; margin-top: 30px; flex: 0 0 auto; }
 
@@ -131,11 +130,6 @@
   .loop {
     position: absolute; left: 0; right: 0; bottom: 0; pointer-events: none;
   }
-  .foot {
-    margin-top: 14px; display: flex; justify-content: space-between; gap: 16px;
-    font-size: 14px; color: #4a4458; padding: 0 8px;
-  }
-  .foot b { color: var(--ink); }
 </style>
 </head>
 <body>
@@ -166,25 +160,25 @@
           <span class="tag">partial pay</span><span class="tag">high risk</span>
         </div>
       </div>
-      <div class="caption">Cases + LLM variants<span class="sub">12 seeds · 4 claim families</span><span class="extra">rewrite questions only; keep facts &amp; ideal_disposition</span></div>
+      <div class="caption">Cases + LLM variants<span class="sub">4 claim families</span></div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#5b3a96" stroke-width="7" marker-end="url(#h1)"/></svg>
     <div class="step" style="width:200px">
       <div class="step-head"><span class="badge">2</span>Skill routing</div>
       <div class="card" style="width:200px"><img src="icons/router.png"></div>
-      <div class="caption">20 insurance skills<span class="sub">ranked by family, tags, wording</span><span class="extra">one skill / round · actions whitelisted</span></div>
+      <div class="caption">20 insurance skills<span class="sub">ranked by case signals</span></div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#5b3a96" stroke-width="7" marker-end="url(#h1)"/></svg>
     <div class="step" style="width:250px">
       <div class="step-head"><span class="badge">3</span>Agent rollouts</div>
       <div class="card" style="width:250px"><img src="icons/rollouts.png"></div>
-      <div class="caption">4 agent profiles<span class="sub">rule_based · llm_skill · risky · over_escalate</span><span class="extra">protocol: skill → action* → respond</span></div>
+      <div class="caption">4 agent profiles<span class="sub">good &amp; risky behaviors</span></div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#5b3a96" stroke-width="7" marker-end="url(#h1)"/></svg>
     <div class="step" style="width:210px">
       <div class="step-head"><span class="badge">4</span>Verifier</div>
       <div class="card" style="width:210px"><img src="icons/verifier.png"></div>
-      <div class="caption">Reward + guardrails<span class="sub">R = out + pol + evi + eff + com − pen</span><span class="extra">hard: payout promise, missed escalate</span></div>
+      <div class="caption">Reward + guardrails<span class="sub">rules + LLM rubric</span></div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#5b3a96" stroke-width="7" marker-end="url(#h1)"/></svg>
     <div class="step" style="width:300px">
@@ -193,7 +187,7 @@
         <img src="icons/database.png" style="max-height:100px">
         <div class="files"><span class="file">policy_sft.jsonl</span><span class="file">rl_rollouts.jsonl</span></div>
       </div>
-      <div class="caption">612 SFT steps · 96 RL episodes<span class="sub">24 cases × 4 profiles</span><span class="extra">step-level SFT · episode-level RL</span></div>
+      <div class="caption">612 SFT steps · 96 RL episodes<span class="sub">step-level &amp; episode-level</span></div>
     </div>
   </div>
 </section>
@@ -204,13 +198,13 @@
 </div>
 
 <!-- Stage 2 -->
-<section class="panel s2" style="padding-bottom:78px">
+<section class="panel s2" style="padding-bottom:66px">
   <h2>Stage 2: Self-Evolving Training (SEED on veRL)</h2>
   <div class="row">
     <div class="step" style="width:180px">
       <div class="step-head"><span class="badge">1</span>Hindsight SFT</div>
       <div class="card" style="width:180px"><img src="icons/sft.png" style="max-height:150px"></div>
-      <div class="caption">SFT model<span class="sub">read τ → episode_skill</span><span class="extra">init actor = analyzer</span></div>
+      <div class="caption">SFT model<span class="sub">init RL policy</span></div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
     <div class="step" id="actor-step" style="width:270px">
@@ -226,7 +220,7 @@
           </div>
         </div>
       </div>
-      <div class="caption">Trajectory group<span class="sub">N rollouts per task {τ¹…τᴺ}</span><span class="extra">same start state · ✓ / ✗ terminals</span></div>
+      <div class="caption">Trajectory group<span class="sub">N rollouts per task</span></div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
     <div class="step" style="width:210px">
@@ -235,7 +229,7 @@
         <div class="formula">A<sub>q,n</sub> = <span class="frac"><span>R(τ<sup>(n)</sup>) − μ<sub>q</sub></span><span>σ<sub>q</sub></span></span></div>
         <span class="pill-gigpo">GiGPO</span>
       </div>
-      <div class="caption">Group-relative<span class="sub">no critic · episode + step groups</span><span class="extra">advantage from R relative to μ, σ</span></div>
+      <div class="caption">Group-relative<span class="sub">no critic needed</span></div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
     <div class="step" style="width:240px">
@@ -244,7 +238,7 @@
         <img src="icons/analyzer.png" style="max-height:110px">
         <div class="skillcards"><div class="skillcard bulb"></div><div class="skillcard bulb"></div><div class="skillcard bulb"></div><div class="skillcard bulb"></div></div>
       </div>
-      <div class="caption">Hindsight skills<span class="sub">insert s into context h̃ = H(h,s)</span><span class="extra">teacher log π(a | h̃)</span></div>
+      <div class="caption">Hindsight skills<span class="sub">teacher log-probs</span></div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
     <div class="step" style="width:230px">
@@ -256,13 +250,12 @@
           <div class="lossbox seed"><i>ℒ</i><sub>SEED</sub> = <i>ℒ</i><sub>RL</sub> + <i>ℒ</i><sub>OPD</sub></div>
         </div>
       </div>
-      <div class="caption">Single update<span class="sub">ℒ_SEED = ℒ_RL + ℒ_OPD</span><span class="extra">veRL · FSDP · vLLM rollout</span></div>
+      <div class="caption">Single update<span class="sub">PPO + distillation</span></div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
     <div class="step" id="crown-step" style="width:150px">
       <div class="step-head" style="color:#1f3f8a">Updated policy</div>
       <div class="card" style="width:150px; border:none; background:transparent"><img src="icons/crown.png" style="max-height:140px"></div>
-      <div class="caption">Updated θ′<span class="sub">shared weights go back</span></div>
     </div>
   </div>
   <svg class="loop" id="loop" height="62">
@@ -287,7 +280,7 @@
         <img src="icons/customer.png" style="max-height:120px">
         <div class="bubble">Which documents are still missing?</div>
       </div>
-      <div class="caption">Multi-round dialogue<span class="sub">history + observations accumulate</span></div>
+      <div class="caption">Multi-round dialogue</div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1d6b45" stroke-width="7" marker-end="url(#h3)"/></svg>
     <div class="step" style="width:200px">
@@ -299,7 +292,7 @@
           <span class="pill respond">respond</span>
         </div>
       </div>
-      <div class="caption">Strict JSON per step<span class="sub">one skill · no thought field</span></div>
+      <div class="caption">Strict JSON per step</div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1d6b45" stroke-width="7" marker-end="url(#h3)"/></svg>
     <div class="step" style="width:290px">
@@ -311,7 +304,7 @@
           <li>Read cache</li><li>Duplicate-write block</li>
         </ul>
       </div>
-      <div class="caption">Failsafe reply on violation<span class="sub">same input blocks as SFT</span></div>
+      <div class="caption">Failsafe reply on violation</div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1d6b45" stroke-width="7" marker-end="url(#h3)"/></svg>
     <div class="step" style="width:280px">
@@ -320,7 +313,7 @@
         <img src="icons/agent.png" style="max-height:120px">
         <div class="bubble" style="max-width:150px">You still need the ID card and invoice.</div>
       </div>
-      <div class="caption">Grounded answer<span class="sub">must match tool results</span></div>
+      <div class="caption">Grounded answer</div>
     </div>
     <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1d6b45" stroke-width="7" marker-end="url(#h3)"/></svg>
     <div class="step" style="width:230px">
@@ -333,16 +326,10 @@
           <div class="bar" style="height:64px;background:#bb8fe0"><span>replay</span></div>
         </div>
       </div>
-      <div class="caption">Verifier on fixed cases<span class="sub">same reward as training</span></div>
+      <div class="caption">Verifier on fixed cases</div>
     </div>
   </div>
 </section>
-
-<div class="foot">
-  <div><b>Protocol</b> &nbsp; user → load_skills → load_action* → respond</div>
-  <div><b>Sandbox</b> &nbsp; 20 skills · read/write tools · simulated world state</div>
-  <div><b>Loop</b> &nbsp; synthesize traces → train (SFT+RL) → serve → traces</div>
-</div>
 
 <script>
   const panel = document.querySelector(".s2");
