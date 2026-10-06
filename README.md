@@ -2,8 +2,6 @@
 
 **An LLM agent for insurance-claims customer service, built around skill-routed tool use, a verifiable sandbox, and self-evolving reinforcement learning.**
 
-保险理赔客服智能体：技能路由 + 工具调用 + 可验证沙箱 + 自进化强化学习（SFT → GiGPO / SEED）。
-
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![veRL](https://img.shields.io/badge/Framework-veRL-orange)
 ![RL](https://img.shields.io/badge/RL-GiGPO%20%7C%20SEED-green)
