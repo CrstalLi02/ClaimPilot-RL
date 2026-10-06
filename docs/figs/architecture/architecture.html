@@ -4,349 +4,389 @@
 <meta charset="utf-8">
 <title>ClaimPilot-RL Architecture</title>
 <style>
-  :root {
-    --ink: #2b2140;
-    --p1: #7a4cc2; --p1bg: #faf6ff;
-    --p2: #2c5fb8; --p2bg: #f3f7ff;
-    --p3: #23885a; --p3bg: #f2fbf5;
-    --arrow1: #5b3a96; --arrow2: #1f3f8a; --arrow3: #1d6b45;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    width: 1600px; height: 1380px; background: #fff; color: var(--ink);
-    font-family: "Chalkboard SE", "Comic Sans MS", "Arial Rounded MT Bold", sans-serif;
-    padding: 22px 30px;
-  }
-  .title {
-    display: flex; align-items: center; justify-content: center; gap: 14px;
-    font-size: 44px; font-weight: 700; letter-spacing: .3px; margin-bottom: 16px;
-  }
-  .title img { height: 58px; }
-  .title small { font-size: 26px; font-weight: 400; color: #6b6280; margin-left: 6px; }
+@font-face { font-family: "Patrick Hand"; src: url("fonts/PatrickHand-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Nunito"; src: url("fonts/Nunito-Regular.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "Nunito"; src: url("fonts/Nunito-Bold.ttf") format("truetype"); font-weight: 700; }
+@font-face { font-family: "Nunito"; src: url("fonts/Nunito-ExtraBold.ttf") format("truetype"); font-weight: 800; }
 
-  .panel {
-    position: relative; border: 3px solid; border-radius: 22px; padding: 14px 22px 18px;
-  }
-  .panel h2 { font-size: 30px; margin-bottom: 8px; }
-  .s1 { border-color: var(--p1); background: var(--p1bg); }
-  .s1 h2 { color: var(--p1); }
-  .s2 { border-color: var(--p2); background: var(--p2bg); }
-  .s2 h2 { color: var(--p2); }
-  .s3 { border-color: var(--p3); background: var(--p3bg); }
-  .s3 h2 { color: var(--p3); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  width: 2000px;
+  background: #fff;
+  color: #1c1a22;
+  font-family: Nunito, sans-serif;
+  padding: 16px 24px 20px;
+}
+.hand { font-family: "Patrick Hand", cursive; font-weight: 400; }
+.title {
+  font-family: "Patrick Hand", cursive;
+  font-size: 62px;
+  text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.title img { height: 56px; }
 
-  .row { display: flex; align-items: stretch; justify-content: space-between; }
-  .step { display: flex; flex-direction: column; align-items: center; }
-  .step-head {
-    display: flex; align-items: center; gap: 8px; font-size: 21px; font-weight: 700;
-    height: 34px; margin-bottom: 6px; white-space: nowrap;
-  }
-  .badge {
-    width: 30px; height: 30px; border-radius: 50%; color: #fff; font-size: 18px;
-    display: inline-flex; align-items: center; justify-content: center; font-weight: 700;
-    font-family: "Arial Rounded MT Bold", sans-serif;
-  }
-  .s1 .badge, .s1 .step-head { --c: var(--p1); }
-  .s2 .badge, .s2 .step-head { --c: var(--p2); }
-  .s3 .badge, .s3 .step-head { --c: var(--p3); }
-  .badge { background: var(--c); }
-  .step-head { color: var(--c); }
+.panel { border: 3.5px solid; border-radius: 28px; padding: 12px 20px 16px; position: relative; }
+.s1 { border-color: #9b72d8; background: #fcf9ff; }
+.s2 { border-color: #5b8ee6; background: #f5f8ff; }
+.s3 { border-color: #5cbc86; background: #f3fbf6; }
+.panel h2 { font-family: "Patrick Hand", cursive; font-size: 38px; line-height: 1; margin-bottom: 12px; }
+.s1 h2 { color: #6b3cb8; }
+.s2 h2 { color: #2157b8; }
+.s3 h2 { color: #1a8a55; }
 
-  .card {
-    border: 2.5px dashed; border-radius: 18px; background: #fff;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    height: 200px; padding: 10px 12px;
-  }
-  .card.solid { border-style: solid; }
-  .s1 .card { border-color: #b79be3; }
-  .s2 .card { border-color: #8fb0e6; }
-  .s3 .card { border-color: #8fd0ad; }
-  .card img { max-height: 160px; max-width: 100%; }
-  .caption { font-size: 18px; font-weight: 700; margin-top: 8px; text-align: center; line-height: 1.25; }
-  .caption .sub { display: block; font-size: 15px; font-weight: 400; color: #6b6280; }
+.flow { display: flex; align-items: center; justify-content: space-between; }
+.col { display: flex; flex-direction: column; align-items: center; }
+.head {
+  font-family: "Patrick Hand", cursive;
+  font-size: 24px;
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 6px; white-space: nowrap;
+}
+.s1 .head { color: #6b3cb8; }
+.s2 .head { color: #2157b8; }
+.s3 .head { color: #1a8a55; }
+.n {
+  width: 24px; height: 24px; border-radius: 50%; color: #fff;
+  font-family: Nunito, sans-serif; font-weight: 800; font-size: 14px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.s1 .n { background: #6b3cb8; }
+.s2 .n { background: #2157b8; }
+.s3 .n { background: #1a8a55; }
+.box {
+  background: #fff; border: 2.4px dashed #c4aae4; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 8px 10px;
+}
+.s2 .box { border-color: #9bb6e6; }
+.s3 .box { border-color: #8dcfab; }
+.box.solid { border-style: solid; }
+.box img { max-height: 112px; max-width: 100%; }
+.cap { margin-top: 6px; text-align: center; font-size: 17px; font-weight: 800; }
+.sub { display: block; font-size: 14px; font-weight: 400; color: #666; }
+.arr { flex: 0 0 42px; height: 22px; }
+.tag { display: block; background: #efe6fb; color: #553091; border-radius: 8px; padding: 2px 8px; font-size: 13px; font-weight: 700; margin: 3px 0; }
+.file { display: block; background: #efe6fb; color: #553091; border-radius: 8px; padding: 3px 8px; font-size: 12px; font-weight: 700; margin: 3px 0; font-family: ui-monospace, Menlo, monospace; }
 
-  .arrow { align-self: center; margin-top: 30px; flex: 0 0 auto; }
+.bridge { text-align: right; padding: 6px 90px 6px 0; font-weight: 800; font-size: 15px; }
+.bridge.b { color: #2157b8; }
+.bridge.g { color: #1a8a55; }
 
-  .tags { display: flex; flex-direction: column; gap: 6px; font-size: 15px; }
-  .tag {
-    border-radius: 10px; padding: 3px 10px; background: #efe7fb; color: #4b2f80; white-space: nowrap;
-  }
-  .files { display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-family: Menlo, monospace; }
-  .file { background: #efe7fb; border-radius: 8px; padding: 4px 8px; color: #4b2f80; }
+/* ===== Stage 2 ===== */
+.s2wrap {
+  display: grid;
+  grid-template-columns: 168px 1fr 220px 170px;
+  grid-template-rows: auto auto;
+  column-gap: 14px;
+  row-gap: 40px;
+  align-items: center;
+  padding: 10px 12px 12px;
+  border: 2.6px dashed #2157b8;
+  border-radius: 18px;
+  position: relative;
+}
+.roles {
+  grid-column: 1; grid-row: 1 / span 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  height: 100%; min-height: 420px;
+}
+.role { display: flex; flex-direction: column; align-items: center; }
+.role img { height: 128px; }
+.rname { font-weight: 800; font-size: 16px; margin-top: 2px; }
+.shared {
+  text-align: center; color: #666; font-size: 13px; font-weight: 800; line-height: 1.2;
+  border-left: 2.5px dashed #999; padding: 8px 0; margin: 8px 0;
+}
+.track {
+  display: flex; align-items: center; gap: 10px;
+}
+.track.top { grid-column: 2; grid-row: 1; }
+.track.bot { grid-column: 2; grid-row: 2; }
+.losses {
+  grid-column: 3; grid-row: 1 / span 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+}
+.policy {
+  grid-column: 4; grid-row: 1 / span 2;
+  display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px;
+}
+.policy .pname { display: flex; flex-direction: column; align-items: center; }
+.policy img { height: 148px; }
+.card {
+  background: #fff; border: 2.4px solid #9bb6e6; border-radius: 14px;
+  padding: 8px 12px; text-align: center;
+}
+.card.g { border-color: #8dcfab; }
+.card h3 { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+.card.g h3 { color: #1a8a55; }
+.math { font-family: "Times New Roman", Times, serif; font-style: italic; font-size: 19px; white-space: nowrap; }
+.frac { display: inline-flex; flex-direction: column; vertical-align: middle; }
+.frac .num { border-bottom: 1.5px solid #1c1a22; padding: 0 3px; }
+.gigpo {
+  display: inline-block; margin-top: 6px; background: #2157b8; color: #fff;
+  border-radius: 10px; padding: 2px 12px; font-weight: 800; font-size: 15px; font-style: normal; font-family: Nunito, sans-serif;
+}
+.mini { width: 92px; border: 1.8px solid #9bb6e6; border-radius: 8px; padding-top: 2px; font-size: 13px; font-weight: 800; color: #2157b8; }
+.sk { width: 86px; height: 70px; border: 1.8px solid #e2c04a; border-radius: 8px; background: #fffbeb; padding: 6px 8px; text-align: left; }
+.sk .ln { height: 6px; background: #e8d48a; border-radius: 3px; margin-top: 6px; }
+.loss {
+  width: 210px; border: 2.4px solid; border-radius: 12px; padding: 8px 10px; text-align: center; background: #fff;
+}
+.loss .k { font-weight: 800; font-size: 16px; }
+.loss .eq { font-family: "Times New Roman", Times, serif; font-style: italic; font-size: 18px; white-space: nowrap; }
+.loss.rl { border-color: #2157b8; color: #2157b8; }
+.loss.opd { border-color: #1a8a55; color: #1a8a55; }
+.loss.seed { border-color: #e07a2f; color: #b45309; background: #fff7ef; }
+.tlab { font-size: 13px; font-weight: 800; color: #2157b8; text-align: center; line-height: 1.15; max-width: 90px; }
+.tlab.g { color: #1a8a55; }
+.insert { display: inline-block; border: 1.6px solid #1a8a55; color: #1a8a55; border-radius: 6px; padding: 0 6px; font-size: 12px; font-weight: 800; font-style: normal; font-family: Nunito, sans-serif; }
+.loop-title {
+  position: absolute; right: 24px; top: 12px;
+  font-family: "Patrick Hand", cursive; font-size: 28px; color: #2157b8;
+}
 
-  .traj { display: flex; gap: 8px; }
-  .traj .t {
-    width: 74px; height: 92px; border: 2px solid #8fb0e6; border-radius: 10px; background: #fafcff;
-    font-size: 13px; text-align: center; padding-top: 2px; color: #2c5fb8;
-  }
-  .formula { font-family: "Times New Roman", serif; font-style: italic; font-size: 24px; text-align: center; }
-  .formula .frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; }
-  .formula .frac span:first-child { border-bottom: 1.5px solid var(--ink); padding: 0 4px; }
-  .pill-gigpo {
-    display: inline-block; margin-top: 12px; padding: 4px 16px; border-radius: 12px;
-    background: #2c5fb8; color: #fff; font-size: 18px; font-family: "Arial Rounded MT Bold", sans-serif; font-style: normal;
-  }
-  .skillcards { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .skillcard {
-    width: 62px; height: 50px; border: 2px solid #f2c94c; border-radius: 8px; background: #fffbea;
-    font-size: 22px; display: flex; align-items: center; justify-content: center;
-  }
-  .loss { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-  .lossbox {
-    border: 2.5px solid; border-radius: 12px; padding: 6px 14px; background: #fff;
-    font-family: "Times New Roman", serif; font-size: 19px; white-space: nowrap;
-  }
-  .lossbox.rl { border-color: #2c5fb8; color: #1f3f8a; }
-  .lossbox.opd { border-color: #23885a; color: #1d6b45; }
-  .lossbox.seed { border-color: #e07a2f; color: #a24b0c; background: #fff6ee; font-weight: 700; }
-  .lossbox i { font-style: italic; }
-
-  .bubble {
-    position: relative; background: #fff; border: 2.5px solid #2b2140; border-radius: 16px;
-    padding: 8px 12px; font-size: 16px; line-height: 1.25; max-width: 170px; text-align: center;
-  }
-  .protocol { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .pill {
-    font-family: Menlo, monospace; font-size: 16px; padding: 7px 14px; border-radius: 22px;
-    border: 2.5px solid #23885a; background: #e6f6ed; color: #145236; font-weight: 700;
-  }
-  .pill.respond { border-color: #e07a2f; background: #fff3e8; color: #8a3d06; }
-  .down { color: #1d6b45; font-size: 18px; line-height: 1; }
-  .bullets { font-size: 15px; line-height: 1.55; }
-  .bullets li { list-style: none; }
-  .bullets li::before { content: "✓ "; color: #23885a; font-weight: 700; }
-  .bars { display: flex; align-items: flex-end; gap: 14px; height: 120px; }
-  .bar { width: 32px; border-radius: 8px 8px 0 0; position: relative; }
-  .bar span { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font-size: 12px; white-space: nowrap; }
-  .skillcard.bulb {
-    background: #fffbea url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 48'><circle cx='16' cy='18' r='9' fill='%23ffd43b' stroke='%23e0a800' stroke-width='2'/><rect x='12' y='26' width='8' height='6' rx='1.5' fill='%239aa0ad'/><rect x='30' y='12' width='22' height='3.5' rx='1.7' fill='%23c9a227'/><rect x='30' y='20' width='18' height='3.5' rx='1.7' fill='%23e3c867'/><rect x='30' y='28' width='20' height='3.5' rx='1.7' fill='%23e3c867'/></svg>") center/88% no-repeat;
-  }
-  .formula { white-space: nowrap; font-size: 22px; }
-
-  .connector {
-    display: flex; justify-content: flex-end; align-items: center; gap: 10px;
-    height: 52px; padding-right: 70px; font-size: 19px; font-weight: 700;
-  }
-  .loop {
-    position: absolute; left: 0; right: 0; bottom: 0; pointer-events: none;
-  }
+.pill { font-family: ui-monospace, Menlo, monospace; font-size: 14px; font-weight: 800; border: 2.2px solid #1a8a55; background: #e8f7ee; color: #145236; border-radius: 16px; padding: 5px 11px; }
+.pill.r { border-color: #e07a2f; background: #fff1e4; color: #9a3b07; }
+.speech { border: 2.2px solid #1c1a22; border-radius: 12px; padding: 7px 9px; font-size: 13.5px; line-height: 1.25; max-width: 148px; text-align: center; background: #fff; }
+.bul { font-size: 14px; line-height: 1.5; }
+.bul li { list-style: none; }
+.bul li:before { content: "• "; color: #1a8a55; font-weight: 800; }
 </style>
 </head>
 <body>
-
-<svg width="0" height="0" style="position:absolute">
+<svg width="0" height="0">
   <defs>
-    <marker id="h1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5b3a96"/></marker>
-    <marker id="h2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1f3f8a"/></marker>
-    <marker id="h3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1d6b45"/></marker>
+    <marker id="mp" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0, 7 3.5, 0 7" fill="#6b3cb8"/></marker>
+    <marker id="mb" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0, 7 3.5, 0 7" fill="#2157b8"/></marker>
+    <marker id="mg" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0, 7 3.5, 0 7" fill="#1a8a55"/></marker>
+    <marker id="mo" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0, 7 3.5, 0 7" fill="#e07a2f"/></marker>
   </defs>
 </svg>
 
-<div class="title">
-  <img src="icons/shield.png" alt="">
-  ClaimPilot-RL <small>Self-Evolving Insurance Claims Agent</small>
-</div>
+<div class="title"><img src="icons/shield.png">ClaimPilot-RL: Self-Evolving Insurance Claims Agent</div>
 
-<!-- Stage 1 -->
 <section class="panel s1">
   <h2>Stage 1: Claims Data Synthesis</h2>
-  <div class="row">
-    <div class="step" style="width:250px">
-      <div class="step-head"><span class="badge">1</span>Seed claim cases</div>
-      <div class="card" style="width:250px">
-        <img src="icons/docs.png" style="max-height:110px">
-        <div class="tags">
-          <span class="tag">pending docs</span><span class="tag">rejection</span>
-          <span class="tag">partial pay</span><span class="tag">high risk</span>
+  <div class="flow">
+    <div class="col" style="width:220px">
+      <div class="head"><span class="n">1</span>Seed claim cases</div>
+      <div class="box" style="width:220px;height:128px">
+        <img src="icons/docs.png" style="max-height:96px">
+        <div><span class="tag">pending docs</span><span class="tag">rejection</span><span class="tag">partial pay</span><span class="tag">high risk</span></div>
+      </div>
+      <div class="cap">Sampled tasks<span class="sub">12 seeds → LLM variants</span></div>
+    </div>
+    <svg class="arr" viewBox="0 0 42 22"><line x1="2" y1="11" x2="34" y2="11" stroke="#6b3cb8" stroke-width="6" stroke-linecap="round" marker-end="url(#mp)"/></svg>
+    <div class="col" style="width:250px">
+      <div class="head"><span class="n">2</span>Skill-routed sandbox</div>
+      <div class="box" style="width:250px;height:128px">
+        <img src="icons/router.png" style="max-height:108px">
+        <img src="icons/env.png" style="max-height:108px">
+      </div>
+      <div class="cap">20 skills + tools<span class="sub">whitelist per skill</span></div>
+    </div>
+    <svg class="arr" viewBox="0 0 42 22"><line x1="2" y1="11" x2="34" y2="11" stroke="#6b3cb8" stroke-width="6" stroke-linecap="round" marker-end="url(#mp)"/></svg>
+    <div class="col" style="width:240px">
+      <div class="head"><span class="n">3</span>Collect trajectories</div>
+      <div class="box solid" style="width:240px;height:128px"><img src="icons/rollouts.png"></div>
+      <div class="cap">4 agent profiles<span class="sub">good / risky / over-escalate</span></div>
+    </div>
+    <svg class="arr" viewBox="0 0 42 22"><line x1="2" y1="11" x2="34" y2="11" stroke="#6b3cb8" stroke-width="6" stroke-linecap="round" marker-end="url(#mp)"/></svg>
+    <div class="col" style="width:220px">
+      <div class="head"><span class="n">4</span>Verify + score</div>
+      <div class="box" style="width:220px;height:128px"><img src="icons/verifier.png"></div>
+      <div class="cap">Reward + guardrails<span class="sub">R = outcome + process − penalty</span></div>
+    </div>
+    <svg class="arr" viewBox="0 0 42 22"><line x1="2" y1="11" x2="34" y2="11" stroke="#6b3cb8" stroke-width="6" stroke-linecap="round" marker-end="url(#mp)"/></svg>
+    <div class="col" style="width:300px">
+      <div class="head"><span class="n">5</span>Export SFT / RL data</div>
+      <div class="box solid" style="width:300px;height:128px">
+        <img src="icons/database.png" style="max-height:86px">
+        <div>
+          <span class="file">policy_sft.jsonl</span>
+          <span class="file">rl_rollouts.jsonl</span>
         </div>
+        <img src="icons/sft.png" style="max-height:86px">
       </div>
-      <div class="caption">Cases + LLM variants<span class="sub">4 claim families</span></div>
-    </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#5b3a96" stroke-width="7" marker-end="url(#h1)"/></svg>
-    <div class="step" style="width:200px">
-      <div class="step-head"><span class="badge">2</span>Skill routing</div>
-      <div class="card" style="width:200px"><img src="icons/router.png"></div>
-      <div class="caption">20 insurance skills<span class="sub">ranked by case signals</span></div>
-    </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#5b3a96" stroke-width="7" marker-end="url(#h1)"/></svg>
-    <div class="step" style="width:250px">
-      <div class="step-head"><span class="badge">3</span>Agent rollouts</div>
-      <div class="card" style="width:250px"><img src="icons/rollouts.png"></div>
-      <div class="caption">4 agent profiles<span class="sub">good &amp; risky behaviors</span></div>
-    </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#5b3a96" stroke-width="7" marker-end="url(#h1)"/></svg>
-    <div class="step" style="width:210px">
-      <div class="step-head"><span class="badge">4</span>Verifier</div>
-      <div class="card" style="width:210px"><img src="icons/verifier.png"></div>
-      <div class="caption">Reward + guardrails<span class="sub">rules + LLM rubric</span></div>
-    </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#5b3a96" stroke-width="7" marker-end="url(#h1)"/></svg>
-    <div class="step" style="width:300px">
-      <div class="step-head"><span class="badge">5</span>Export datasets</div>
-      <div class="card solid" style="width:300px">
-        <img src="icons/database.png" style="max-height:100px">
-        <div class="files"><span class="file">policy_sft.jsonl</span><span class="file">rl_rollouts.jsonl</span></div>
-      </div>
-      <div class="caption">612 SFT steps · 96 RL episodes<span class="sub">step-level &amp; episode-level</span></div>
+      <div class="cap">612 SFT steps · 96 episodes<span class="sub">init the RL policy</span></div>
     </div>
   </div>
 </section>
 
-<div class="connector" style="color:#1f3f8a">
-  Initialize training
-  <svg width="30" height="46"><line x1="15" y1="2" x2="15" y2="34" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
+<div class="bridge b">Initialize RL policy
+  <svg width="20" height="26" style="vertical-align:middle"><line x1="10" y1="1" x2="10" y2="18" stroke="#2157b8" stroke-width="5" marker-end="url(#mb)"/></svg>
 </div>
 
-<!-- Stage 2 -->
-<section class="panel s2" style="padding-bottom:66px">
-  <h2>Stage 2: Self-Evolving Training (SEED on veRL)</h2>
-  <div class="row">
-    <div class="step" style="width:180px">
-      <div class="step-head"><span class="badge">1</span>Hindsight SFT</div>
-      <div class="card" style="width:180px"><img src="icons/sft.png" style="max-height:150px"></div>
-      <div class="caption">SFT model<span class="sub">init RL policy</span></div>
+<section class="panel s2">
+  <h2>Stage 2: Self-Evolving On-Policy Distillation</h2>
+  <div class="loop-title">Self-Evolving Loop</div>
+  <div class="s2wrap">
+    <div class="roles">
+      <div class="role">
+        <img src="icons/actor.png">
+        <div class="rname">Actor</div>
+      </div>
+      <div class="shared">↕<br>Shared<br>Model</div>
+      <div class="role">
+        <img src="icons/analyzer.png">
+        <div class="rname">Analyzer</div>
+      </div>
     </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
-    <div class="step" id="actor-step" style="width:270px">
-      <div class="step-head"><span class="badge">2</span>Actor rollouts</div>
-      <div class="card solid" style="width:270px">
-        <img src="icons/actor.png" style="max-height:100px">
-        <div class="traj">
-          <div class="t">τ<sup>(1)</sup>
-            <svg width="66" height="64"><polyline points="6,56 20,40 30,46 44,24 60,10" fill="none" stroke="#2c5fb8" stroke-width="2" stroke-dasharray="3 3"/><circle cx="6" cy="56" r="4" fill="#9aa9c7"/><circle cx="30" cy="46" r="4" fill="#9aa9c7"/><circle cx="60" cy="10" r="5" fill="#2fbf71"/></svg>
+
+    <div class="track top">
+      <svg width="28" height="54" viewBox="0 0 28 54">
+        <path d="M4,16 A10,10 0 1 1 24,16" fill="none" stroke="#2157b8" stroke-width="3.5"/>
+        <path d="M24,38 A10,10 0 1 1 4,38" fill="none" stroke="#2157b8" stroke-width="3.5"/>
+      </svg>
+      <div class="col">
+        <img src="icons/env.png" style="height:110px">
+        <div class="cap">Claims sandbox</div>
+      </div>
+      <svg width="36" height="22"><line x1="2" y1="11" x2="28" y2="11" stroke="#2157b8" stroke-width="5.5" marker-end="url(#mb)"/></svg>
+      <div class="card" style="width:250px; position:relative">
+        <h3>Trajectories Group</h3>
+        <div class="math">{ τ<sup>(1)</sup>, …, τ<sup>(N)</sup> }</div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:6px">
+          <div class="mini">τ<sup>(1)</sup>
+            <svg width="84" height="52"><polyline points="8,44 22,30 36,36 54,16 74,10" fill="none" stroke="#2157b8" stroke-width="2" stroke-dasharray="3 3"/><circle cx="8" cy="44" r="3.5" fill="#9aaccc"/><circle cx="74" cy="10" r="4.5" fill="#2fbf71"/></svg>
           </div>
-          <div class="t">τ<sup>(N)</sup>
-            <svg width="66" height="64"><polyline points="6,56 22,30 36,44 50,30 60,50" fill="none" stroke="#2c5fb8" stroke-width="2" stroke-dasharray="3 3"/><circle cx="6" cy="56" r="4" fill="#9aa9c7"/><circle cx="36" cy="44" r="4" fill="#9aa9c7"/><circle cx="60" cy="50" r="5" fill="#e5484d"/></svg>
+          <div class="mini">τ<sup>(N)</sup>
+            <svg width="84" height="52"><polyline points="8,44 24,24 40,34 56,26 74,42" fill="none" stroke="#2157b8" stroke-width="2" stroke-dasharray="3 3"/><circle cx="8" cy="44" r="3.5" fill="#9aaccc"/><circle cx="74" cy="42" r="4.5" fill="#e5484d"/></svg>
           </div>
         </div>
       </div>
-      <div class="caption">Trajectory group<span class="sub">N rollouts per task</span></div>
-    </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
-    <div class="step" style="width:210px">
-      <div class="step-head"><span class="badge">3</span>Group advantage</div>
-      <div class="card solid" style="width:210px; flex-direction:column">
-        <div class="formula">A<sub>q,n</sub> = <span class="frac"><span>R(τ<sup>(n)</sup>) − μ<sub>q</sub></span><span>σ<sub>q</sub></span></span></div>
-        <span class="pill-gigpo">GiGPO</span>
+      <svg width="36" height="22"><line x1="2" y1="11" x2="28" y2="11" stroke="#2157b8" stroke-width="5.5" marker-end="url(#mb)"/></svg>
+      <div class="card" style="width:270px">
+        <h3>Group-Relative Advantage</h3>
+        <div class="math">A<sub>q,n</sub> = <span class="frac"><span class="num">R(τ<sub>q</sub><sup>(n)</sup>) − μ<sub>q</sub></span><span>σ<sub>q</sub></span></span></div>
+        <div class="gigpo">GiGPO</div>
       </div>
-      <div class="caption">Group-relative<span class="sub">no critic needed</span></div>
     </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
-    <div class="step" style="width:240px">
-      <div class="step-head"><span class="badge">4</span>Analyzer</div>
-      <div class="card solid" style="width:240px">
-        <img src="icons/analyzer.png" style="max-height:110px">
-        <div class="skillcards"><div class="skillcard bulb"></div><div class="skillcard bulb"></div><div class="skillcard bulb"></div><div class="skillcard bulb"></div></div>
-      </div>
-      <div class="caption">Hindsight skills<span class="sub">teacher log-probs</span></div>
-    </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
-    <div class="step" style="width:230px">
-      <div class="step-head"><span class="badge">5</span>SEED loss</div>
-      <div class="card solid" style="width:230px">
-        <div class="loss">
-          <div class="lossbox rl">RL loss <i>ℒ</i><sub>RL</sub></div>
-          <div class="lossbox opd">OPD loss <i>ℒ</i><sub>OPD</sub></div>
-          <div class="lossbox seed"><i>ℒ</i><sub>SEED</sub> = <i>ℒ</i><sub>RL</sub> + <i>ℒ</i><sub>OPD</sub></div>
+
+    <div class="track bot">
+      <svg width="36" height="22"><line x1="2" y1="11" x2="28" y2="11" stroke="#1a8a55" stroke-width="5.5" marker-end="url(#mg)"/></svg>
+      <div class="card g" style="width:250px; position:relative">
+        <div class="tlab" style="position:absolute;top:-22px;left:50%;transform:translateX(-50%);white-space:nowrap">↓ Completed Trajectories</div>
+        <h3>Hindsight Skills</h3>
+        <div class="math">{ s<sub>q</sub><sup>(1)</sup>, …, s<sub>q</sub><sup>(N)</sup> }</div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:6px">
+          <div class="sk"><svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6" fill="#ffd43b" stroke="#e0a800" stroke-width="1.5"/><rect x="9" y="15" width="6" height="5" rx="1" fill="#9aa0ad"/></svg><div class="ln"></div><div class="ln" style="width:65%"></div></div>
+          <div class="sk"><svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6" fill="#ffd43b" stroke="#e0a800" stroke-width="1.5"/><rect x="9" y="15" width="6" height="5" rx="1" fill="#9aa0ad"/></svg><div class="ln"></div><div class="ln" style="width:50%"></div></div>
         </div>
       </div>
-      <div class="caption">Single update<span class="sub">PPO + distillation</span></div>
+      <div class="tlab g">Insert skill<br>into context</div>
+      <div class="card g" style="width:248px">
+        <h3>Skill-Augmented Context</h3>
+        <div class="math">h̃<sub>q,n</sub> = H(h<sub>q,n</sub>, s<sub>q</sub><sup>(n)</sup>)</div>
+        <div style="margin-top:8px;font-size:13px">original h &nbsp;<span class="insert">Insert</span>&nbsp; skill s</div>
+      </div>
+      <svg width="36" height="22"><line x1="2" y1="11" x2="28" y2="11" stroke="#1a8a55" stroke-width="5.5" marker-end="url(#mg)"/></svg>
+      <div class="card g" style="width:230px">
+        <h3>Re-score sampled actions</h3>
+        <div style="font-size:13.5px;line-height:1.45;margin-top:6px">
+          Teacher: log π<sub>θ</sub>(a | h̃)<br>
+          Student: log π<sub>θ</sub>(a | h)
+        </div>
+        <div class="sub" style="margin-top:4px">same actions, different context</div>
+      </div>
     </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1f3f8a" stroke-width="7" marker-end="url(#h2)"/></svg>
-    <div class="step" id="crown-step" style="width:150px">
-      <div class="step-head" style="color:#1f3f8a">Updated policy</div>
-      <div class="card" style="width:150px; border:none; background:transparent"><img src="icons/crown.png" style="max-height:140px"></div>
+
+    <div class="losses">
+      <div class="loss rl"><div class="k">RL Loss</div><div class="eq">ℒ<sub>RL</sub></div></div>
+      <svg width="22" height="22"><line x1="11" y1="1" x2="11" y2="16" stroke="#2157b8" stroke-width="5" marker-end="url(#mb)"/></svg>
+      <div class="loss seed"><div class="k">SEED Loss</div><div class="eq">ℒ<sub>SEED</sub> = ℒ<sub>RL</sub> + ℒ<sub>OPD</sub></div></div>
+      <svg width="22" height="22"><line x1="11" y1="16" x2="11" y2="1" stroke="#1a8a55" stroke-width="5" marker-end="url(#mg)"/></svg>
+      <div class="loss opd"><div class="k">OPD Loss</div><div class="eq">ℒ<sub>OPD</sub></div></div>
+    </div>
+
+    <div class="policy">
+      <svg width="40" height="22"><line x1="2" y1="11" x2="32" y2="11" stroke="#e07a2f" stroke-width="5.5" marker-end="url(#mo)"/></svg>
+      <div class="pname">
+        <img src="icons/crown.png">
+        <div class="rname" style="color:#2157b8">Updated Policy</div>
+      </div>
     </div>
   </div>
-  <svg class="loop" id="loop" height="62">
-    <path id="loop-path" fill="none" stroke="#1f3f8a" stroke-width="3.5" stroke-dasharray="10 7" marker-end="url(#h2)"/>
-    <rect id="loop-bg" y="18" width="230" height="30" rx="10" fill="#f3f7ff"/>
-    <text id="loop-text" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#1f3f8a" font-family="Chalkboard SE, Comic Sans MS, sans-serif">Self-Evolving Loop</text>
-  </svg>
 </section>
 
-<div class="connector" style="color:#1d6b45">
-  Deploy
-  <svg width="30" height="46"><line x1="15" y1="2" x2="15" y2="34" stroke="#1d6b45" stroke-width="7" marker-end="url(#h3)"/></svg>
+<div class="bridge g">Deploy
+  <svg width="20" height="26" style="vertical-align:middle"><line x1="10" y1="1" x2="10" y2="18" stroke="#1a8a55" stroke-width="5" marker-end="url(#mg)"/></svg>
 </div>
 
-<!-- Stage 3 -->
 <section class="panel s3">
   <h2>Stage 3: Serving Harness</h2>
-  <div class="row">
-    <div class="step" style="width:260px">
-      <div class="step-head"><span class="badge">1</span>Customer asks</div>
-      <div class="card" style="width:260px">
-        <img src="icons/customer.png" style="max-height:120px">
-        <div class="bubble">Which documents are still missing?</div>
+  <div class="flow">
+    <div class="col" style="width:250px">
+      <div class="head"><span class="n">1</span>Customer turn</div>
+      <div class="box" style="width:250px;height:128px">
+        <img src="icons/customer.png" style="max-height:100px">
+        <div class="speech">Which documents are still missing?</div>
       </div>
-      <div class="caption">Multi-round dialogue</div>
+      <div class="cap">Multi-round dialogue</div>
     </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1d6b45" stroke-width="7" marker-end="url(#h3)"/></svg>
-    <div class="step" style="width:200px">
-      <div class="step-head"><span class="badge">2</span>Agent protocol</div>
-      <div class="card solid" style="width:200px">
-        <div class="protocol">
-          <span class="pill">load_skills</span><span class="down">▼</span>
-          <span class="pill">load_action*</span><span class="down">▼</span>
-          <span class="pill respond">respond</span>
-        </div>
+    <svg class="arr" viewBox="0 0 42 22"><line x1="2" y1="11" x2="34" y2="11" stroke="#1a8a55" stroke-width="6" stroke-linecap="round" marker-end="url(#mg)"/></svg>
+    <div class="col" style="width:180px">
+      <div class="head"><span class="n">2</span>Protocol</div>
+      <div class="box solid" style="width:180px;height:128px;flex-direction:column;gap:3px">
+        <span class="pill">load_skills</span>
+        <div style="color:#1a8a55;font-weight:800;font-size:13px">▼</div>
+        <span class="pill">load_action*</span>
+        <div style="color:#1a8a55;font-weight:800;font-size:13px">▼</div>
+        <span class="pill r">respond</span>
       </div>
-      <div class="caption">Strict JSON per step</div>
+      <div class="cap">One skill per round</div>
     </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1d6b45" stroke-width="7" marker-end="url(#h3)"/></svg>
-    <div class="step" style="width:290px">
-      <div class="step-head"><span class="badge">3</span>Control plane</div>
-      <div class="card solid" style="width:290px">
-        <img src="icons/shield.png" style="max-height:100px">
-        <ul class="bullets">
-          <li>JSON validation</li><li>Skill/action whitelist</li><li>Tool budgets</li>
-          <li>Read cache</li><li>Duplicate-write block</li>
+    <svg class="arr" viewBox="0 0 42 22"><line x1="2" y1="11" x2="34" y2="11" stroke="#1a8a55" stroke-width="6" stroke-linecap="round" marker-end="url(#mg)"/></svg>
+    <div class="col" style="width:300px">
+      <div class="head"><span class="n">3</span>Control plane</div>
+      <div class="box solid" style="width:300px;height:128px">
+        <img src="icons/shield.png" style="max-height:86px">
+        <ul class="bul">
+          <li>JSON schema check</li>
+          <li>Skill / action whitelist</li>
+          <li>Tool budget + read cache</li>
+          <li>Duplicate-write block</li>
         </ul>
       </div>
-      <div class="caption">Failsafe reply on violation</div>
+      <div class="cap">Failsafe reply on violation</div>
     </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1d6b45" stroke-width="7" marker-end="url(#h3)"/></svg>
-    <div class="step" style="width:280px">
-      <div class="step-head"><span class="badge">4</span>Claims agent</div>
-      <div class="card" style="width:280px">
-        <img src="icons/agent.png" style="max-height:120px">
-        <div class="bubble" style="max-width:150px">You still need the ID card and invoice.</div>
+    <svg class="arr" viewBox="0 0 42 22"><line x1="2" y1="11" x2="34" y2="11" stroke="#1a8a55" stroke-width="6" stroke-linecap="round" marker-end="url(#mg)"/></svg>
+    <div class="col" style="width:260px">
+      <div class="head"><span class="n">4</span>Claims agent</div>
+      <div class="box" style="width:260px;height:128px">
+        <img src="icons/agent.png" style="max-height:104px">
+        <div class="speech">You still need the ID card and the invoice.</div>
       </div>
-      <div class="caption">Grounded answer</div>
+      <div class="cap">Grounded in tool results</div>
     </div>
-    <svg class="arrow" width="40" height="30"><line x1="2" y1="15" x2="28" y2="15" stroke="#1d6b45" stroke-width="7" marker-end="url(#h3)"/></svg>
-    <div class="step" style="width:230px">
-      <div class="step-head"><span class="badge">5</span>Regression eval</div>
-      <div class="card solid" style="width:230px; padding-bottom:30px">
-        <div class="bars">
-          <div class="bar" style="height:96px;background:#6fcf97"><span>train</span></div>
-          <div class="bar" style="height:76px;background:#56a8e8"><span>holdout</span></div>
-          <div class="bar" style="height:44px;background:#f2994a"><span>redteam</span></div>
-          <div class="bar" style="height:64px;background:#bb8fe0"><span>replay</span></div>
+    <svg class="arr" viewBox="0 0 42 22"><line x1="2" y1="11" x2="34" y2="11" stroke="#1a8a55" stroke-width="6" stroke-linecap="round" marker-end="url(#mg)"/></svg>
+    <div class="col" style="width:250px">
+      <div class="head"><span class="n">5</span>Regression eval</div>
+      <div class="box solid" style="width:250px;height:128px;flex-direction:column;justify-content:flex-end;padding:10px 8px 8px">
+        <div style="display:flex;align-items:flex-end;gap:14px;height:78px;justify-content:center">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div style="width:28px;height:68px;background:#6fcf97;border-radius:5px 5px 0 0"></div>
+            <span style="font-size:13px;font-weight:700">train</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div style="width:28px;height:54px;background:#56a8e8;border-radius:5px 5px 0 0"></div>
+            <span style="font-size:13px;font-weight:700">holdout</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div style="width:28px;height:32px;background:#f2994a;border-radius:5px 5px 0 0"></div>
+            <span style="font-size:13px;font-weight:700">red-team</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div style="width:28px;height:44px;background:#bb8fe0;border-radius:5px 5px 0 0"></div>
+            <span style="font-size:13px;font-weight:700">replay</span>
+          </div>
         </div>
       </div>
-      <div class="caption">Verifier on fixed cases</div>
+      <div class="cap">Same verifier as training</div>
     </div>
   </div>
 </section>
-
-<script>
-  const panel = document.querySelector(".s2");
-  const loop = document.getElementById("loop");
-  const p = panel.getBoundingClientRect();
-  const center = (id) => {
-    const r = document.getElementById(id).getBoundingClientRect();
-    return r.left + r.width / 2 - p.left - 3;
-  };
-  const from = center("crown-step"), to = center("actor-step"), y = 38;
-  loop.setAttribute("width", p.width - 6);
-  document.getElementById("loop-path").setAttribute("d", `M${from},0 L${from},${y} L${to},${y} L${to},16`);
-  document.getElementById("loop-bg").setAttribute("y", y - 15);
-  document.getElementById("loop-text").setAttribute("y", y + 7);
-  const mid = (from + to) / 2;
-  document.getElementById("loop-bg").setAttribute("x", mid - 115);
-  document.getElementById("loop-text").setAttribute("x", mid);
-</script>
 </body>
 </html>
