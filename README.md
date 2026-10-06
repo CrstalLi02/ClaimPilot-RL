@@ -21,29 +21,7 @@
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    subgraph Data["Data synthesis (claim_agent_sandbox)"]
-        A[Seed cases] --> B[LLM case variants]
-        B --> C[Skill router<br/>20 skills]
-        C --> D[Agent rollouts<br/>4 profiles]
-        D --> E[Verifier<br/>reward + guardrails]
-        E --> F[(policy_sft.jsonl)]
-        E --> G[(rl_rollouts.jsonl)]
-    end
-
-    subgraph Train["Training (SEED / veRL)"]
-        F --> H[Stage 1: SFT]
-        H --> I[Stage 2: RL<br/>GiGPO + OPD]
-        G --> I
-    end
-
-    subgraph Serve["Serving harness"]
-        I --> J[ServingHarnessSession]
-        J --> K[Validate → run tool → observe]
-        K --> L[Regression and red-team eval]
-    end
-```
+![ClaimPilot-RL architecture](docs/figs/claimpilot_architecture.png)
 
 ## Repository layout
 
